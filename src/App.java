@@ -47,6 +47,28 @@ public class App {
             System.out.println(pessoa);
         }
 
+
+        // calculando salario medio das pessoas
+        System.out.println("-------------------------------------------");
+        double salarioTotal = 0;
+        double salarioMax = 0;
+        double salariaMin = 999999999;
+        for (Pessoa pessoa : pessoas) {
+            salarioTotal = salarioTotal + pessoa.getSalario();
+            if(pessoa.getSalario() > salarioMax){
+                salarioMax = pessoa.getSalario();
+            }
+            if(pessoa.getSalario() < salariaMin){
+                salariaMin = pessoa.getSalario();
+            }
+        }
+        System.out.println("salario medio = " + salarioTotal / pessoas.size());
+        System.out.println("salario maximo = " + salarioMax);
+        System.out.println("salario minimo = "+ salariaMin);
+
+
+
+
         System.out.println("-------------------------------------------");
         pessoas.removeIf(new Contem2Predicado());
         System.out.println("Lista de pessoas após o removeIf com predicado");
@@ -69,7 +91,8 @@ public class App {
         }
 
 
-        pessoas.forEach(p -> System.out.println(p.getCpf().contains(buscaCPF)));
+
+
 
 
     }
