@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import modelo.Motorista;
 import modelo.Passageiro;
 import modelo.Pessoa;
@@ -17,14 +18,57 @@ public class App {
         pessoas.add(new Motorista("Maria almeida 2", "333", 150));
         pessoas.add(new Motorista("Gustavo silviano", "222", 123));
         pessoas.add(new Passageiro("Juliana motta 2", "111", 330));
-        pessoas.add(new Passageiro("Andre andrade", "000", 123));
+        pessoas.add(new Passageiro("Andre Andrade", "000", 123));
         pessoas.add(new Passageiro("Gabriela oliveira", "444", 333));
         
+        // como faremos um sumario a partir de uma List
+        System.out.println("imprimendo o sumario");
+        System.out.println("-------------------------------------------");
+        double salarioMedio = 
+            pessoas.stream()
+            .collect(Collectors.averagingDouble(Pessoa::getSalario));
 
+        System.out.println("Salário médio é " + salarioMedio);
+
+
+        // extraindo uma nova lista com os resultados do filter
+        System.out.println("extrair um nova lista da lista principal");
+        System.out.println("-------------------------------------------");
+        
+        List<Pessoa> pessoasFilter = 
+                    pessoas.stream()
+                        .filter(p -> p.getSalario() >= 150)
+                        .sorted(Comparator.comparing(Pessoa::getNome))
+                        // o metodo toList() vem da classe Collectors, que importamos como metodo static
+                        .collect(Collectors.toList());
+
+        pessoasFilter.forEach(System.out::println);
+
+
+
+        System.out.println("-------------------------------------------");
+        System.out.println("Imprimindo somente os motoristas da lista de pessoas");
+        pessoas.stream()
+        .filter(p -> 
+                p instanceof Passageiro 
+                && p.getNome().toUpperCase().contains("AN") 
+                && p.getSalario() > 300)
+        .forEach(System.out::println);
+
+
+        System.out.println("-------------------------------------------");
         System.out.println("Lista original");
-        for (Pessoa pessoa : pessoas) {
-            System.out.println(pessoa);
-        }
+
+        // imprimindo todos os elementos da lista
+        //pessoas.forEach(System.out::println);
+
+        //for(int i = 0; i < pessoas.size(); i++){
+        //    System.out.println(pessoas.get(i));
+        //}
+
+        //for (Pessoa pessoa : pessoas) {
+        //    System.out.println(pessoa);
+        //}
 
         System.out.println("-------------------------------------------");
         pessoas.sort(null);
